@@ -122,9 +122,8 @@ app.post('/register', async (req, res) => {
     //     }
     // )
 
-
     await db
-        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, {firstname, lastname, email, phone, password})
+        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, [firstname, lastname, email, phone, password])
         .then(() => res.send('Values inserted'))
         .catch(err => console.log(err));
 });
