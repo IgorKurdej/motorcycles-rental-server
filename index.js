@@ -11,8 +11,8 @@ const corsOptions = {
     origin: ['https://igorkurdej.github.io/motorcycles-rental/', 'igorkurdej.github.io/motorcycles-rental/'],
     credentials: true,
 }
-app.use(cors(corsOptions))
 
+app.use(cors(corsOptions))
 // app.use(cors());
 
 const port = process.env.PORT || 3001;
@@ -38,6 +38,7 @@ app.get('/users', (req, res) => {
         .catch(err => console.log(err));
 });
 
+// ?????
 app.post('/motorcycles', (req, res) => {
     const motorcycleId = req.body.motorcycleId;
 
@@ -91,20 +92,33 @@ app.post('/booking', (req, res) => {
         .catch((err) => console.log(err));
 });
 
-app.post('/userReservation', (req, res) => {
-    const userId = req.body.userId;
+// app.post('/userReservation', (req, res) => {
+//     const userId = req.body.userId;
+//
+//     db.query(
+//         'SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img FROM reservation INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id WHERE userId = ?',
+//         [userId],
+//         (err, result) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 res.send(result);
+//             }
+//         }
+//     )
+// });
 
-    db.query(
-        'SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img FROM reservation INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id WHERE userId = ?',
-        [userId],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
-    )
+app.get('/userReservation/:id', (req, res) => {
+    const id = req.params.id;
+
+    db
+        .query(
+        `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img 
+             FROM reservation 
+             INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id 
+             WHERE userId = ${id}`)
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
 });
 
 app.delete('/deleteReservation/:id', (req, res) => {
