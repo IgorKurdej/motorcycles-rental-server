@@ -131,16 +131,10 @@ app.get('/userReservation/:id', (req, res) => {
 
 app.delete('/deleteReservation/:id', (req, res) => {
     const id = req.params.id;
-    db.query(
-        `DELETE FROM reservation WHERE id = ${id}`,
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
-    )
+    db
+        .query(`DELETE FROM reservation WHERE id = ${id}`)
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
 });
 
 app.put('/updateReservation', (req, res) => {
