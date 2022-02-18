@@ -107,7 +107,7 @@ app.post('/motorcycles', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    // const {firstname, lastname, email, phone, password} = req.body;
+    const {firstname, lastname, email, phone, password} = req.body;
 
     //, [firstname, lastname, email, phone, password]
     // db.query(
@@ -124,7 +124,7 @@ app.post('/register', async (req, res) => {
 
 
     await db
-        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, {...req.body})
+        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, {firstname, lastname, email, phone, password})
         .then(() => res.send('Values inserted'))
         .catch(err => console.log(err));
 });
