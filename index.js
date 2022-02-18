@@ -17,6 +17,8 @@ app.use(express.json());
 
 app.use(cors());
 
+
+
 const db = mysql.createConnection({
     user: process.env.USER,
     host: process.env.HOST,
@@ -24,24 +26,36 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
+db.query(
+    `SELECT * FROM motorcycles`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            // res.send(result);
+        }
+    }
+)
+
 const port = process.env.PORT || 3001;
 
 app.get('/motorcycles', (req, res) => {
-    // db
-    //     .query("SELECT * FROM motorcycles")
-    //     .then(result => res.send(result))
-    //     .catch(err => console.log(err));
+    db
+        .query("SELECT * FROM motorcycles")
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
 
-    db.query(
-        `SELECT * FROM motorcycles`,
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
-    )
+    // db.query(
+    //     `SELECT * FROM motorcycles`,
+    //     (err, result) => {
+    //         if (err) {
+    //             console.log(err);
+    //         } else {
+    //             res.send(result);
+    //         }
+    //     }
+    // )
 
 });
 
