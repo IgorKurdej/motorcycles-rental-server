@@ -6,13 +6,6 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "N0rthFish31#",
-    database: 'inzdb',
-});
-
 app.get('/motorcycles', (req,res) => {
     db.query(
         "SELECT * FROM motorcycles",
