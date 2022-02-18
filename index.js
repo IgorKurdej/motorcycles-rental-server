@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const env = require('./env');
-const mysql = require('mysql2');
-// const { SlimNodeMySQL } = require('slim-node-mysql');
+// const mysql = require('mysql2');
+const { SlimNodeMySQL } = require('slim-node-mysql');
 
-// const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
+const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
 const app = express();
 app.use(express.json());
 
@@ -19,24 +19,24 @@ app.use(cors());
 
 
 
-const db = mysql.createConnection({
-    user: process.env.USER,
-    host: process.env.HOST,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
-});
+// const db = mysql.createConnection({
+//     user: process.env.USER,
+//     host: process.env.HOST,
+//     password: process.env.PASSWORD,
+//     database: process.env.DATABASE
+// });
 
-db.query(
-    `SELECT * FROM motorcycles`,
-    (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(result);
-            // res.send(result);
-        }
-    }
-)
+// db.query(
+//     `SELECT * FROM motorcycles`,
+//     (err, result) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             console.log(result);
+//             // res.send(result);
+//         }
+//     }
+// )
 
 const port = process.env.PORT || 3001;
 
