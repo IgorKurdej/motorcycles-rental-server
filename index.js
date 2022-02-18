@@ -22,13 +22,13 @@ app.get('/motorcycles', (req, res) => {
         .query("SELECT * FROM motorcycles")
         .then(result => res.send(result))
         .catch(err => console.log(err));
-        // (err, result) => {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         res.send(result)
-        //     }
-        // }
+});
+
+app.get('/reservation', (req, res) => {
+    db
+        .query("SELECT * FROM reservation")
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
 });
 
 app.post('/motorcycles', (req, res) => {
