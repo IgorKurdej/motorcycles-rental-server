@@ -111,7 +111,7 @@ app.post('/booking', (req, res) => {
 app.get('/user/:id', (req, res) => {
     const id = req.params.id;
     db
-        .query(`SELECT * FROM users WHERE userId = ${id}`)
+        .query(`SELECT * FROM users WHERE id = ${id}`)
         .then(result => res.send(result))
         .catch(err => console.log(err));
 });
