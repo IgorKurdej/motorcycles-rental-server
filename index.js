@@ -13,22 +13,13 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
-app.use(cors());
+// app.use(cors());
 
 const port = process.env.PORT || 3001;
 
-// db
-//     .query(`
-//         SELECT * FROM motorcycles
-//     `)
-//     .then((res) => console.log(res[0]))
-//     .catch((err) => console.log(err))
-//     .finally(() => {
-//         db.close();
-//     })
-
 app.get('/motorcycles', (req, res) => {
-    db.query("SELECT * FROM motorcycles")
+    db
+        .query("SELECT * FROM motorcycles")
         .then(result => res.send(result))
         .catch(err => console.log(err));
         // (err, result) => {
@@ -57,23 +48,12 @@ app.post('/motorcycles', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const password = req.body.password;
+    const {firstname, lastname, email, phone, password} = req.body;
 
-    db.query(
-        'INSERT INTO users (firstname, lastname, email, phone, password) VALUES (?, ?, ?, ?, ?)',
-        [firstname, lastname, email, phone, password],
-        (err) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send('Values inserted');
-            }
-        }
-    )
+    db
+        .query('INSERT INTO users (firstname, lastname, email, phone, password) VALUES (?, ?, ?, ?, ?)', [firstname, lastname, email, phone, password])
+        .then(() => res.send('Values inserted'))
+        .catch(err => console.log(err));
 });
 
 app.post('/login', (req, res) => {
@@ -94,23 +74,14 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/booking', (req, res) => {
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
-    const price = req.body.price;
-    const userId = req.body.userId;
-    const motorcycleId = req.body.motorcycleId;
+    const {startDate, endDate, price, userId, motorcycleId} = req.body;
 
-    db.query(
-        'INSERT INTO reservation (startDate, endDate, price, userId, motorcycleId) VALUES (?, ?, ?, ?, ?)',
-        [startDate, endDate, price, userId, motorcycleId],
-        (err) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send('Values inserted');
-            }
-        }
-    )
+    db
+        .query(
+            'INSERT INTO reservation (startDate, endDate, price, userId, motorcycleId) VALUES (?, ?, ?, ?, ?)',
+            [startDate, endDate, price, userId, motorcycleId])
+        .then(() => console.log('inserted'))
+        .catch((err) => console.log(err));
 });
 
 app.post('/userReservation', (req, res) => {
