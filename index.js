@@ -106,8 +106,13 @@ app.post('/motorcycles', (req, res) => {
     )
 });
 
-app.post('/register', async (req, res) => {
+app.post('/register', (req, res) => {
     const {firstname, lastname, email, phone, password} = req.body;
+
+    db
+        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, [firstname, lastname, email, phone, password])
+        .then(() => res.send('Values inserted'))
+        .catch(err => console.log(err));
 
     //, [firstname, lastname, email, phone, password]
     // db.query(
@@ -121,11 +126,6 @@ app.post('/register', async (req, res) => {
     //         }
     //     }
     // )
-
-    await db
-        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, [firstname, lastname, email, phone, password])
-        .then(() => res.send('Values inserted'))
-        .catch(err => console.log(err));
 });
 
 app.post('/login', (req, res) => {
