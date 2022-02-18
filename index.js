@@ -108,9 +108,16 @@ app.post('/booking', (req, res) => {
 //     )
 // });
 
+app.get('/user/:id', (req, res) => {
+    const id = req.params.id;
+    db
+        .query(`SELECT * FROM users WHERE userId = ${id}`)
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
+});
+
 app.get('/userReservation/:id', (req, res) => {
     const id = req.params.id;
-
     db
         .query(
         `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img 
