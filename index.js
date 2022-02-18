@@ -26,7 +26,14 @@ app.get('/motorcycles', (req, res) => {
 
 app.get('/reservation', (req, res) => {
     db
-        .query("SELECT * FROM reservation")
+        .query("SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img FROM reservation INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id")
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
+});
+
+app.get('/users', (req, res) => {
+    db
+        .query("SELECT * FROM users")
         .then(result => res.send(result))
         .catch(err => console.log(err));
 });
