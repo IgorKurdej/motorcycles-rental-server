@@ -7,16 +7,23 @@ const { SlimNodeMySQL } = require('slim-node-mysql');
 const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
 const app = express();
 app.use(express.json());
+// app.use(cors());
 
-// const corsOptions = {
-//     origin: ['https://igorkurdej.github.io/motorcycles-rental/', 'igorkurdej.github.io/motorcycles-rental/'],
-//     credentials: true,
-// }
+const corsOptions = {
+    origin: ['https://igorkurdej.github.io/motorcycles-rental/', 'igorkurdej.github.io/motorcycles-rental/'],
+    credentials: true,
+}
 
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
-app.use(cors());
-
+// db
+//     .query(
+//         'SELECT * FROM users'
+//         // `INSERT INTO users (firstname, lastname, email, phone, password)
+//         //      VALUES ('Jake', 'Harper', 'jh@ow.pl', 123123123, 123123)`
+//     )
+//     .then(res => console.log(res))
+//     .catch(err => console.log(err));
 
 
 // const db = mysql.createConnection({
