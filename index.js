@@ -1,12 +1,16 @@
 const express = require('express');
-const app = express();
-const mysql = require('mysql2');
 const cors = require('cors');
+const env = require('./env');
+const { SlimNodeMySQL } = require('slim-node-mysql');
 
-app.use(cors());
+const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
+const app = express();
 app.use(express.json());
+app.use(cors());
 
-app.get('/motorcycles', (req,res) => {
+const port = process.env.PORT || 3001;
+
+app.get('/motorcycles', (req, res) => {
     db.query(
         "SELECT * FROM motorcycles",
         (err, result) => {
@@ -53,10 +57,7 @@ app.post('/register', (req, res) => {
             }
         }
     )
-
-})
-
-
+});
 
 app.post('/login', (req, res) => {
     const email = req.body.email;
@@ -93,8 +94,7 @@ app.post('/booking', (req, res) => {
             }
         }
     )
-})
-
+});
 
 app.post('/userReservation', (req, res) => {
     const userId = req.body.userId;
@@ -124,7 +124,7 @@ app.delete('/deleteReservation/:id', (req, res) => {
             }
         }
     )
-})
+});
 
 app.put('/updateReservation', (req, res) => {
     const id = req.body.id;
@@ -145,6 +145,4 @@ app.put('/updateReservation', (req, res) => {
     )
 })
 
-const PORT = 3001;
-
-app.listen(process.env.PORT || PORT, () => console.log(`Server is running on port ${PORT}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`));
