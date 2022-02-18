@@ -6,21 +6,38 @@ const { SlimNodeMySQL } = require('slim-node-mysql');
 const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
 const app = express();
 app.use(express.json());
+
+const corsOptions = {
+    origin: ['https://igorkurdej.github.io/motorcycles-rental/', 'igorkurdej.github.io/motorcycles-rental/'],
+    credentials: true,
+}
+app.use(cors(corsOptions))
+
 app.use(cors());
 
 const port = process.env.PORT || 3001;
 
+// db
+//     .query(`
+//         SELECT * FROM motorcycles
+//     `)
+//     .then((res) => console.log(res[0]))
+//     .catch((err) => console.log(err))
+//     .finally(() => {
+//         db.close();
+//     })
+
 app.get('/motorcycles', (req, res) => {
-    db.query(
-        "SELECT * FROM motorcycles",
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result)
-            }
-        }
-    )
+    db.query("SELECT * FROM motorcycles")
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
+        // (err, result) => {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         res.send(result)
+        //     }
+        // }
 });
 
 app.post('/motorcycles', (req, res) => {
