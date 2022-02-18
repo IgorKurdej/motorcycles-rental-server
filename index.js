@@ -16,11 +16,20 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
+const jake = {
+    firstname: 'Jan',
+    lastname: "Kowalski",
+    email: 'ig@o2.pl',
+    phone: 987890989,
+    password: '987654'
+}
+
+
 // db
 //     .query(
-//         'SELECT * FROM users'
-//         // `INSERT INTO users (firstname, lastname, email, phone, password)
-//         //      VALUES ('Jake', 'Harper', 'jh@ow.pl', 123123123, 123123)`
+//         // 'SELECT * FROM users'
+//         `INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`,
+//         [jake.firstname, jake.lastname, jake.email, jake.phone, jake.password]
 //     )
 //     .then(res => console.log(res))
 //     .catch(err => console.log(err));
@@ -98,7 +107,7 @@ app.post('/motorcycles', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const {firstname, lastname, email, phone, password} = req.body;
+    // const {firstname, lastname, email, phone, password} = req.body;
 
     //, [firstname, lastname, email, phone, password]
     // db.query(
@@ -115,9 +124,9 @@ app.post('/register', async (req, res) => {
 
 
     await db
-        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (?, ?, ?, ?, ?)`, {firstname, lastname, email, phone, password});
-        // .then(() => res.send('Values inserted'))
-        // .catch(err => console.log(err));
+        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, {...req.body})
+        .then(() => res.send('Values inserted'))
+        .catch(err => console.log(err));
 });
 
 app.post('/login', (req, res) => {
