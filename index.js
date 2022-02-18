@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const env = require('./env');
-// const mysql = require('mysql2');
 const { SlimNodeMySQL } = require('slim-node-mysql');
 
 const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
@@ -15,44 +14,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-
-const jake = {
-    firstname: 'Jan',
-    lastname: "Kowalski",
-    email: 'ig@o2.pl',
-    phone: 987890989,
-    password: '987654'
-}
-
-
-// db
-//     .query(
-//         // 'SELECT * FROM users'
-//         `INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`,
-//         [jake.firstname, jake.lastname, jake.email, jake.phone, jake.password]
-//     )
-//     .then(res => console.log(res))
-//     .catch(err => console.log(err));
-
-
-// const db = mysql.createConnection({
-//     user: process.env.USER,
-//     host: process.env.HOST,
-//     password: process.env.PASSWORD,
-//     database: process.env.DATABASE
-// });
-
-// db.query(
-//     `SELECT * FROM motorcycles`,
-//     (err, result) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log(result);
-//             // res.send(result);
-//         }
-//     }
-// )
 
 const port = process.env.PORT || 3001;
 
@@ -90,42 +51,30 @@ app.get('/users', (req, res) => {
 });
 
 // ?????
-app.post('/motorcycles', (req, res) => {
-    const motorcycleId = req.body.motorcycleId;
-
-    db.query(
-        `SELECT * FROM motorcycles WHERE id = ?`,
-        [motorcycleId],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
-    )
-});
+// app.post('/motorcycles', (req, res) => {
+//     const motorcycleId = req.body.motorcycleId;
+//
+//     db.query(
+//         `SELECT * FROM motorcycles WHERE id = ?`,
+//         [motorcycleId],
+//         (err, result) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 res.send(result);
+//             }
+//         }
+//     )
+// });
 
 app.post('/register', (req, res) => {
-    const {firstname, lastname, email, phone, password} = req.body;
-
     db
-        .query(`INSERT INTO users (firstname, lastname, email, phone, password) VALUES (firstname, lastname, email, phone, password)`, [firstname, lastname, email, phone, password])
+        .query(
+            `INSERT INTO users (firstname, lastname, email, phone, password) VALUES (@firstname, @lastname, @email, @phone, @password)`,
+            { ...req.body }
+        )
         .then(() => res.send('Values inserted'))
         .catch(err => console.log(err));
-
-    //, [firstname, lastname, email, phone, password]
-    // db.query(
-    //     'INSERT INTO users (firstname, lastname, email, phone, password) VALUES (?, ?, ?, ?, ?)',
-    //     [firstname, lastname, email, phone, password],
-    //     (err, result) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             res.send(result);
-    //         }
-    //     }
-    // )
 });
 
 app.post('/login', (req, res) => {
