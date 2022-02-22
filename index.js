@@ -94,7 +94,7 @@ app.post('/booking', (req, res) => {
         .query(
             'INSERT INTO reservation (startDate, endDate, price, userId, motorcycleId) VALUES (@startDate, @endDate, @price, @userId, @motorcycleId)',
             {...req.body})
-        .then(() => console.log('Zarezerwowano'))
+        .then(() => res.send('Zarezerwowano'))
         .catch((err) => console.log(err));
 });
 
