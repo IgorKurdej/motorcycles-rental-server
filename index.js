@@ -70,7 +70,7 @@ app.get('/users', (req, res) => {
 app.post('/register', (req, res) => {
     db
         .query(
-            `INSERT INTO users (firstname, lastname, email, phone, password) VALUES (@firstname, @lastname, @email, @phone, @password)`,
+            `INSERT INTO user (firstname, lastname, email, phone, password) VALUES (@firstname, @lastname, @email, @phone, @password)`,
             { ...req.body }
         )
         .then(() => res.send('Values inserted'))
