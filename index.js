@@ -89,13 +89,12 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/booking', (req, res) => {
-    const {startDate, endDate, price, userId, motorcycleId} = req.body;
 
     db
         .query(
-            'INSERT INTO reservation (startDate, endDate, price, userId, motorcycleId) VALUES (?, ?, ?, ?, ?)',
-            [startDate, endDate, price, userId, motorcycleId])
-        .then(() => console.log('inserted'))
+            'INSERT INTO reservation (startDate, endDate, price, userId, motorcycleId) VALUES (@startDate, @endDate, @price, @userId, @motorcycleId)',
+            {...req.body})
+        .then(() => console.log('Zarezerwowano'))
         .catch((err) => console.log(err));
 });
 
