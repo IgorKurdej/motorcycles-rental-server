@@ -67,7 +67,7 @@ app.get('/userReservation/:id', (req, res) => {
     db
         .query(
         `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img, motorcycles.cena
-             FROM reservation 
+             FROM reservation
              INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id 
              WHERE userId = ${id}`)
         .then(result => res.send(result))
@@ -83,21 +83,13 @@ app.delete('/deleteReservation/:id', (req, res) => {
 });
 
 app.put('/updateReservation', (req, res) => {
-    const id = req.body.id;
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
-    const price = req.body.price;
-
-    db.query(
-        'UPDATE reservation SET startDate = ?, endDate = ?, price = ? WHERE id = ?',
-        [startDate, endDate, price, id],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
+    db.query
+        (
+            'UPDATE reservation SET startDate = @startDate, endDate = @endDate, price = @price WHERE id = @id',
+            {...req.body}
+        )
+        .then(result => res.send(result))
+        .catch(err => console.log(err)
     )
 })
 
