@@ -73,25 +73,19 @@ app.post('/register', (req, res) => {
             `INSERT INTO user (firstname, lastname, email, phone, password) VALUES (@firstname, @lastname, @email, @phone, @password)`,
             { ...req.body }
         )
-        .then(() => res.send('Values inserted'))
+        .then(() => res.send('Zarejestrowano pomyślnie'))
         .catch(err => console.log(err));
 });
 
 app.post('/login', (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-
-    db.query(
-        'SELECT * FROM users WHERE email = ? AND password = ?',
-        [email, password],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
-    )
+    db
+        .query(
+        'SELECT * FROM user WHERE email = @email AND password = @password',
+        {...req.body}
+        )
+        .then(() => {res.send('Zalogowano')})
+        .catch(err => console.log(err)
+    );
 });
 
 app.post('/booking', (req, res) => {
