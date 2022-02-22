@@ -54,22 +54,6 @@ app.post('/booking', (req, res) => {
         .catch((err) => console.log(err));
 });
 
-// app.post('/userReservation', (req, res) => {
-//     const userId = req.body.userId;
-//
-//     db.query(
-//         'SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img FROM reservation INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id WHERE userId = ?',
-//         [userId],
-//         (err, result) => {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 res.send(result);
-//             }
-//         }
-//     )
-// });
-
 app.get('/user/:id', (req, res) => {
     const id = req.params.id;
     db
@@ -93,7 +77,7 @@ app.get('/userReservation/:id', (req, res) => {
 app.delete('/deleteReservation/:id', (req, res) => {
     const id = req.params.id;
     db
-        .query(`DELETE FROM reservation WHERE id = ${id}`)
+        .query(`DELETE FROM reservation WHERE id = @id`, {id: id})
         .then(result => res.send(result))
         .catch(err => console.log(err));
 });
