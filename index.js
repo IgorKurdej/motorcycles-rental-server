@@ -83,7 +83,7 @@ app.post('/login', (req, res) => {
         'SELECT * FROM user WHERE email = @email AND password = @password',
         {...req.body}
         )
-        .then(() => {res.send('Zalogowano')})
+        .then(result => {res.send(result)})
         .catch(err => console.log(err)
     );
 });
