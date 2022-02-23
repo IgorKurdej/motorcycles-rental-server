@@ -6,7 +6,7 @@ const { SlimNodeMySQL } = require('slim-node-mysql');
 const db = new SlimNodeMySQL(env.CLEARDB_DATABASE_URL);
 const app = express();
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 // const corsOptions = {
 //     origin: ['https://igorkurdej.github.io/motorcycles-rental/', 'https://igorkurdej.github.io/motorcycles-rental/'],
@@ -15,12 +15,12 @@ app.use(express.json());
 //
 // app.use(cors(corsOptions))
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://igorkurdej.github.io/motorcycles-rental/');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // next();
-});
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', 'https://igorkurdej.github.io/motorcycles-rental/');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     // next();
+// });
 
 const port = process.env.PORT || 3001;
 
