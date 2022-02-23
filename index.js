@@ -83,6 +83,16 @@ app.put('/updateReservation', (req, res) => {
         .then(result => res.send(result))
         .catch(err => console.log(err)
     )
-})
+});
+
+app.put('/user', (req, res) => {
+    db
+        .query(
+            'UPDATE user SET firstname=@firstname, lastname=@lastname, email=@email, phone=@phone, password=@password WHERE id=@id',
+            {...req.body}
+        )
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
+});
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
