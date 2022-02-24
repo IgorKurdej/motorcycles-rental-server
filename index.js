@@ -85,7 +85,7 @@ app.put('/updateReservation', (req, res) => {
     )
 });
 
-app.put('/user', (req, res) => {
+app.put('/updateUser', (req, res) => {
     db
         .query(
             'UPDATE user SET firstname=@firstname, lastname=@lastname, email=@email, phone=@phone, password=@password WHERE id=@id',
