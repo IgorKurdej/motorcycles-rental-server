@@ -16,6 +16,13 @@ app.get('/motorcycles', (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.get('/users', (req, res) => {
+    db
+        .query("SELECT * FROM user")
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
+})
+
 app.post('/register', (req, res) => {
     db
         .query(
