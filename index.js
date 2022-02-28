@@ -81,6 +81,14 @@ app.delete('/deleteReservation/:id', (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.delete('deleteUser/:id', (req, res) => {
+    const id = req.params.id;
+    db
+        .query(`DELETE FROM user WHERE id = @id`, {id: id})
+        .then(result => res.send(result))
+        .catch(err => console.log(err));
+})
+
 app.put('/updateReservation', (req, res) => {
     db.query
         (
