@@ -16,6 +16,16 @@ app.get('/motorcycles', (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.post('/motorcycle', (req, res) => {
+    db
+        .query(
+            `INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (@marka, @model, @pojemność, @moc, @rok, @cena, @img)`,
+            { ...req.body }
+        )
+        .then(() => res.send('Dodano motocykl'))
+        .catch(err => console.log(err));
+})
+
 app.get('/users', (req, res) => {
     db
         .query("SELECT * FROM user")
