@@ -56,7 +56,7 @@ app.post('/login', (req, res) => {
 app.post('/booking', (req, res) => {
     db
         .query(
-            'INSERT INTO reservation (startDate, endDate, price, userId, motorcycleId) VALUES (@startDate, @endDate, @price, @userId, @motorcycleId)',
+            'INSERT INTO reservation (startDate, endDate, finalPrice, userId, motorcycleId) VALUES (@startDate, @endDate, @finalPrice, @userId, @motorcycleId)',
             {...req.body})
         .then(() => res.send('Zarezerwowano'))
         .catch((err) => console.log(err));
@@ -74,7 +74,7 @@ app.get('/userReservation/:id', (req, res) => {
     const id = req.params.id;
     db
         .query(
-        `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.brand, motorcycles.model, motorcycles.img, motorcycles.price
+        `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.finalPrice, motorcycles.brand, motorcycles.model, motorcycles.img, motorcycles.price
              FROM reservation
              INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id 
              WHERE userId = ${id}`)
@@ -101,7 +101,7 @@ app.delete('/deleteUser/:id', (req, res) => {
 app.put('/updateReservation', (req, res) => {
     db.query
         (
-            'UPDATE reservation SET startDate = @startDate, endDate = @endDate, price = @price WHERE id = @id',
+            'UPDATE reservation SET startDate = @startDate, endDate = @endDate, finalPrice = @finalPrice WHERE id = @id',
             {...req.body}
         )
         .then(result => res.send(result))
