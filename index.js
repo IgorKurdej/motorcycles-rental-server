@@ -19,7 +19,7 @@ app.get('/motorcycles', (req, res) => {
 app.post('/addMotorcycle', (req, res) => {
     db
         .query(
-            'INSERT INTO motorcycle (brand, model, capacity, power, year, price, img) VALUES (@brand, @model, @capacity, @power, @year, @price, @img)',
+            'INSERT INTO motorcycles (brand, model, capacity, power, year, price, img) VALUES (@brand, @model, @capacity, @power, @year, @price, @img)',
             {...req.body})
         .then(() => res.send('Dodano motocykl'))
         .catch((err) => console.log(err));
@@ -74,7 +74,7 @@ app.get('/userReservation/:id', (req, res) => {
     const id = req.params.id;
     db
         .query(
-        `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.marka, motorcycles.model, motorcycles.img, motorcycles.cena
+        `SELECT reservation.id, reservation.startDate, reservation.endDate, reservation.price, motorcycles.brand, motorcycles.model, motorcycles.img, motorcycles.price
              FROM reservation
              INNER JOIN motorcycles ON reservation.motorcycleId = motorcycles.id 
              WHERE userId = ${id}`)
