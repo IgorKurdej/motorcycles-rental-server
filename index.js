@@ -20,7 +20,7 @@ app.post('/addMotorcycle', (req, res) => {
     console.log(req);
     db
         .query(
-            'INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (@marka, @model, @pojemność, @moc, @rok, @cena, @img)',
+            'INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (?, ?, ?,?,?,?,?)',
             {...req.body})
         .then(() => res.send('Zarezerwowano'))
         .catch((err) => console.log(err));
