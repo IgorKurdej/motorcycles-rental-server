@@ -17,11 +17,19 @@ app.get('/motorcycles', (req, res) => {
 });
 
 app.post('/addMotorcycle', (req, res) => {
-    console.log(req);
+    const {marka, model, pojemność, moc, rok, cena, img} = req.body;
     db
         .query(
-            'INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (?, ?, ?,?,?,?,?)',
-            {...req.body})
+            'INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (marka, model, pojemność, moc, rok, cena, img)',
+            {
+                marka: marka,
+                model: model,
+                pojemność: pojemność,
+                moc: moc,
+                rok: rok,
+                cena: cena,
+                img: img
+            })
         .then(() => res.send('Zarezerwowano'))
         .catch((err) => console.log(err));
 });
