@@ -20,7 +20,7 @@ app.post('/addMotorcycle', (req, res) => {
     const {marka, model, pojemność, moc, rok, cena, img} = req.body;
     db
         .query(
-            'INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (marka, model, pojemność, moc, rok, cena, img)',
+            'INSERT INTO motorcycles (marka, model, pojemność, moc, rok, cena, img) VALUES (@marka, @model, @pojemność, @moc, @rok, @cena, @img)',
             {
                 marka: marka,
                 model: model,
@@ -30,7 +30,7 @@ app.post('/addMotorcycle', (req, res) => {
                 cena: cena,
                 img: img
             })
-        .then(() => res.send('Zarezerwowano'))
+        .then(() => res.send('Dodano motocykl'))
         .catch((err) => console.log(err));
 });
 
