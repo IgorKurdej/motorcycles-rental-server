@@ -11,7 +11,7 @@ const port = process.env.PORT || 3001;
 
 app.get('/motorcycles', (req, res) => {
     db
-        .query("SELECT * FROM motorcycle")
+        .query("SELECT * FROM motorcycles")
         .then(result => res.send(result))
         .catch(err => console.log(err));
 });
